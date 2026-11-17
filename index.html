@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hussein Shel</title>
+<meta name="description" content="Hussein Shel leads Google Cloud's global oil and gas strategy. Talks, podcasts and press from a career across Chevron, Microsoft, AWS and Google Cloud.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a seismic section behind the name, then the career drawn as a well log
+   (surface = today, deeper = earlier), then a filterable media index. Single dark theme by choice. */
+:root {
+  color-scheme: dark;
+  --bg: #0a0d11;        /* crude-black with a blue bias */
+  --surface: #11161c;
+  --line: #232b35;
+  --text: #e9edf1;
+  --muted: #8d99a6;
+  --flare: #ff9a3d;     /* gas-flare amber, the one accent */
+  --display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 400 17px/1.6 var(--body); -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--flare); outline-offset: 3px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+.mono { font: 500 12px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+/* nav */
+nav { position: sticky; top: 0; z-index: 5; background: rgba(10,13,17,.82); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 56px; }
+nav .brand { font: 800 22px/1 var(--display); letter-spacing: .04em; text-decoration: none; }
+nav .brand span { color: var(--flare); }
+nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
+nav ul a { text-decoration: none; font: 500 12px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+nav ul a:hover { color: var(--text); }
+@media (max-width: 520px) { nav ul { gap: 14px; } nav ul li.opt { display: none; } }
+
+/* hero */
+header { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+#seis { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .55; }
+header::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg) 0%, rgba(10,13,17,.86) 45%, rgba(10,13,17,.25) 100%); }
+.hero { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; padding: 72px 20px 64px; }
+h1 { font: 800 clamp(56px, 13vw, 132px)/.88 var(--display); letter-spacing: .005em; text-transform: uppercase; margin: 14px 0 22px; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--flare); }
+.lead { max-width: 34em; font-size: 19px; color: #c9d1d9; margin: 0 0 28px; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-block; padding: 12px 20px; border: 1px solid var(--line); text-decoration: none; font: 500 13px var(--mono); letter-spacing: .08em; text-transform: uppercase; background: var(--surface); transition: border-color .2s, color .2s; }
+.btn:hover { border-color: var(--flare); color: var(--flare); }
+.btn.primary { background: var(--flare); border-color: var(--flare); color: #14100a; }
+.btn.primary:hover { color: #14100a; filter: brightness(1.08); }
+.portrait { width: 220px; aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--line); background: radial-gradient(circle at 30% 25%, #1c242e, var(--surface)); display: grid; place-items: center; position: relative; box-shadow: 0 0 0 8px rgba(255,154,61,.06), 0 0 0 9px rgba(255,154,61,.25); overflow: hidden; }
+.portrait b { font: 800 84px/1 var(--display); color: var(--flare); letter-spacing: .02em; }
+.portrait small { position: absolute; bottom: 30px; font: 400 10px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; padding: 44px 20px 48px; gap: 26px; }
+  .portrait { width: 132px; order: -1; } .portrait b { font-size: 50px; } .portrait small { bottom: 16px; font-size: 8px; }
+  header::after { background: linear-gradient(180deg, rgba(10,13,17,.72), var(--bg) 92%); }
+}
+
+/* sections */
+section { padding: 72px 0; border-bottom: 1px solid var(--line); }
+h2 { font: 800 clamp(34px, 6vw, 56px)/.95 var(--display); text-transform: uppercase; letter-spacing: .01em; margin: 10px 0 28px; text-wrap: balance; }
+.about { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: start; }
+.about p { max-width: 62ch; margin: 0 0 16px; color: #c9d1d9; }
+blockquote { margin: 0; padding: 24px; background: var(--surface); border-left: 3px solid var(--flare); }
+blockquote p { font: 600 30px/1.05 var(--display); text-transform: uppercase; color: var(--text); margin: 0 0 14px; }
+.topics { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; padding: 0; list-style: none; }
+.topics li { font: 400 12px var(--mono); padding: 6px 10px; border: 1px solid var(--line); color: var(--muted); }
+@media (max-width: 760px) { .about { grid-template-columns: 1fr; gap: 28px; } section { padding: 52px 0; } }
+
+/* well log */
+.log { display: grid; gap: 0; border: 1px solid var(--line); background: var(--surface); }
+.log-head { display: grid; grid-template-columns: 84px 36px 1fr; border-bottom: 1px solid var(--line); }
+.log-head span { padding: 10px 12px; font: 500 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.log-head span + span { border-left: 1px solid var(--line); }
+.fm { display: grid; grid-template-columns: 84px 36px 1fr; border-bottom: 1px solid var(--line); }
+.fm:last-child { border-bottom: 0; }
+.depth { padding: 22px 12px; font: 500 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums;
+  background: repeating-linear-gradient(180deg, transparent 0 15px, var(--line) 15px 16px) right / 8px 100% no-repeat; }
+.lith { border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+.l1 { background: var(--flare); }
+.l2 { background: repeating-linear-gradient(45deg, #2b3542 0 2px, transparent 2px 8px); }
+.l3 { background: radial-gradient(#3a4756 1.2px, transparent 1.4px) 0 0 / 8px 8px; }
+.l4 { background: repeating-linear-gradient(0deg, #2b3542 0 1px, transparent 1px 7px), repeating-linear-gradient(90deg, #2b3542 0 1px, transparent 1px 14px); }
+.role { padding: 22px 20px 24px; }
+.role h3 { font: 800 30px/1 var(--display); text-transform: uppercase; letter-spacing: .02em; margin: 0 0 4px; }
+.role .title { font: 500 13px var(--mono); color: var(--flare); margin: 0 0 10px; }
+.role p { margin: 0; max-width: 60ch; color: #b9c2cc; font-size: 16px; }
+@media (max-width: 520px) { .log-head, .fm { grid-template-columns: 62px 18px 1fr; } .depth { padding: 20px 8px; font-size: 11px; } .role { padding: 18px 14px 20px; } .role h3 { font-size: 26px; } }
+
+.role ul { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 12px; max-width: 64ch; }
+.role li { position: relative; padding-left: 18px; color: #b9c2cc; font-size: 15.5px; line-height: 1.55; }
+.role li::before { content: ""; position: absolute; left: 0; top: .62em; width: 8px; height: 2px; background: var(--flare); }
+.role li b { color: var(--text); font-weight: 600; }
+.side { display: grid; gap: 20px; }
+.pillars { margin: 0; display: grid; gap: 0; border: 1px solid var(--line); }
+.pillars div { padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.pillars div:last-child { border-bottom: 0; }
+.pillars dt { font: 500 11px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--flare); margin-bottom: 6px; }
+.pillars dd { margin: 0; font-size: 15px; line-height: 1.5; color: #b9c2cc; }
+
+/* media index */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.filters button { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 9px 14px; background: transparent; color: var(--muted); border: 1px solid var(--line); cursor: pointer; }
+.filters button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.index { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.index li { border-bottom: 1px solid var(--line); }
+.index li[hidden] { display: none; }
+.item { display: grid; grid-template-columns: 96px 1fr auto; gap: 18px; align-items: baseline; padding: 18px 4px; text-decoration: none; transition: background .2s, padding .2s; }
+a.item:hover { background: var(--surface); padding-left: 12px; }
+a.item:hover .t { color: var(--flare); }
+.item .k { font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--flare); }
+.item .t { font: 600 18px/1.3 var(--body); display: block; transition: color .2s; }
+.item .o { font-size: 14px; color: var(--muted); display: block; margin-top: 3px; }
+.item .y { font: 400 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 560px) { .item { grid-template-columns: 1fr auto; gap: 4px 12px; } .item .k { grid-column: 1; } .item .y { grid-column: 2; grid-row: 1; } .item .b { grid-column: 1 / -1; } }
+
+/* footer */
+footer { padding: 64px 0 56px; }
+footer h2 { margin-bottom: 14px; }
+footer p { color: var(--muted); max-width: 52ch; margin: 0 0 24px; }
+.fine { margin-top: 48px; font: 400 11px var(--mono); color: #5d6874; letter-spacing: .06em; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<nav aria-label="Primary">
+  <div class="wrap">
+    <a class="brand" href="#top">H<span>/</span>S</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#career">Career</a></li>
+      <li><a href="#media">Media</a></li>
+      <li class="opt"><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header id="top">
+  <canvas id="seis" aria-hidden="true"></canvas>
+  <div class="wrap hero">
+    <div>
+      <div class="mono">Houston, Texas · Energy · Cloud · AI</div>
+      <h1>Hussein <em>Shel</em></h1>
+      <p class="lead">I help the world's largest energy companies rebuild how they work on cloud and AI. Today I lead Google Cloud's global oil and gas strategy, after a decade inside Chevron and technology leadership at Microsoft and AWS.</p>
+      <div class="cta">
+        <a class="btn primary" href="#media">Talks, podcasts and press</a>
+        <a class="btn" href="#career">Career log</a>
+      </div>
+    </div>
+    <div class="portrait" id="portrait">
+      <img src="photo.jpg" alt="Portrait of Hussein Shel" width="520" height="520">
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="about">
+  <div class="wrap">
+    <div class="mono">01 · About</div>
+    <h2>Changing how big energy runs on cloud and AI.</h2>
+    <div class="about">
+      <div>
+        <p>My career has followed one question. How does a century-old industry, built on physics, steel and decades of data, rebuild itself on cloud and AI without losing what makes it work?</p>
+        <p>I have answered it from every seat at the table. I spent a decade inside Chevron as an operator. I then carried that experience to Microsoft, AWS and now Google Cloud, where I set energy technology strategy across the three largest cloud platforms in the world.</p>
+        <p>Along the way I have led, sponsored and launched programs that reset what the industry thought was possible: Chevron, SLB and Microsoft's Triple Crown partnership, the Shell, SLB and AWS subsurface collaboration, Eni's geoscience platform, and the Energy HPC Orchestrator built with Shell and Occidental.</p>
+        <p>The pattern is the same each time. Align the operator, the service company and the cloud provider around one outcome. Put domain experts and engineers in the same room. Ship a platform the whole industry can build on.</p>
+        <ul class="topics" aria-label="Topics I speak on">
+          <li>Enterprise AI transformation</li>
+          <li>AI agents in energy</li>
+          <li>Subsurface data and seismic HPC</li>
+          <li>Operator, service company and cloud partnerships</li>
+          <li>Cloud strategy for supermajors and NOCs</li>
+          <li>Human + AI</li>
+        </ul>
+      </div>
+      <div class="side">
+        <blockquote>
+          <p>“The energy industry stands at a massive inflection point.”</p>
+          <div class="mono">On joining Google Cloud, July 2026</div>
+        </blockquote>
+        <dl class="pillars">
+          <div><dt>Strategy</dt><dd>Sets cloud and AI direction with the executive teams of supermajors, national oil companies and the software companies that serve them.</dd></div>
+          <div><dt>Platforms</dt><dd>Turns one company's breakthrough into a platform the rest of the industry can adopt.</dd></div>
+          <div><dt>Partnerships</dt><dd>Brings operators, service companies and cloud providers into multi-year, multi-party agreements.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="career">
+  <div class="wrap">
+    <div class="mono">02 · Career log</div>
+    <h2>Read it like a well log. Surface is today.</h2>
+    <div class="log">
+      <div class="log-head"><span>Depth</span><span></span><span>Formation</span></div>
+
+      <div class="fm">
+        <div class="depth">2026<br>Now</div><div class="lith l1"></div>
+        <div class="role">
+          <h3>Google Cloud</h3>
+          <div class="title">Market Lead Director, Global Oil and Gas</div>
+          <p>I own Google Cloud's strategy and market position across the oil and gas value chain worldwide, from subsurface to trading.</p>
+          <ul>
+            <li><b>Global strategy.</b> Sets where and how Google Cloud invests in the industry, and which problems its AI, data and high-performance computing platforms go after first.</li>
+            <li><b>Executive partnerships.</b> Works directly with the leadership of supermajors, national oil companies and energy software companies on their AI roadmaps.</li>
+            <li><b>Agentic AI for energy.</b> Leads the push to move operators from AI pilots to agents that run inside day-to-day engineering and operations work.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="fm">
+        <div class="depth">~4 yrs</div><div class="lith l2"></div>
+        <div class="role">
+          <h3>Amazon Web Services</h3>
+          <div class="title">Director and Chief Technologist, Energy and Utilities · Head of Upstream</div>
+          <p>I led cloud migration and technology innovation programs for the world's leading energy and utility companies, and served as the senior technology voice of AWS to their executives.</p>
+          <ul>
+            <li><b>Shell, SLB and AWS.</b> Sponsored the multi-year, three-way agreement to deliver end-to-end digital subsurface workflows for Shell, running SLB software on AWS.</li>
+            <li><b>Energy HPC Orchestrator.</b> Launched an open platform for seismic imaging and reservoir simulation, built with Shell and Occidental and accelerated with NVIDIA. It opened workloads that once took tens of millions of dollars in hardware to operators of any size.</li>
+            <li><b>Eni geoscience platform.</b> Partnered with Eni on its collaborative geoscience platform, presented together at AWS re:Invent 2023.</li>
+            <li><b>Generative AI for energy.</b> Co-authored AWS's thesis on generative AI in energy, later cited by the Brookings Institution, and took it to the keynote stage at DISTRIBUTECH, CERAWeek and SPE ATCE.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="fm">
+        <div class="depth">Earlier</div><div class="lith l3"></div>
+        <div class="role">
+          <h3>Microsoft</h3>
+          <div class="title">CTO, Energy and Resources · Director, Strategic Customer Engagements</div>
+          <p>I rose from program manager on Azure's big-compute team to chief technology officer for Microsoft's worldwide energy business, partnering with energy companies around the world on digital transformation and the energy transition.</p>
+          <ul>
+            <li><b>Triple Crown.</b> Led the landmark partnership between Chevron, SLB and Microsoft that put SLB's petrotechnical software on Azure, shaped by Chevron's expertise, and deployed it globally. It became the foundation for a commercial data platform offered to the whole industry.</li>
+            <li><b>Cloud HPC for oil and gas.</b> Led delivery of Microsoft's cloud high-performance computing platform for the industry, moving seismic processing and reservoir simulation off fixed on-premises clusters.</li>
+            <li><b>Strategic customers.</b> Directed Microsoft's engagements with its most strategic energy customers, from first architecture to enterprise-wide rollout.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="fm">
+        <div class="depth">10 yrs</div><div class="lith l4"></div>
+        <div class="role">
+          <h3>Chevron</h3>
+          <div class="title">Enterprise Architect · Upstream Transformation</div>
+          <p>A decade inside one of the world's largest operators, across upstream and midstream business units. This is where I learned what technology has to survive in the field.</p>
+          <ul>
+            <li><b>Upstream technology strategy.</b> Shaped Chevron's key technology strategies for drilling and completions, production and operations, and reservoir management.</li>
+            <li><b>The unconventionals factory.</b> Served as enterprise architect for the information architecture behind Chevron's factory model, mapping the critical data across the full life of a well.</li>
+            <li><b>The operator's view.</b> Built the perspective I later brought to Triple Crown and every partnership since: start from the asset, not the platform.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="media">
+  <div class="wrap">
+    <div class="mono">03 · Media index</div>
+    <h2>Talks, podcasts and press</h2>
+    <div class="filters" role="group" aria-label="Filter media">
+      <button type="button" id="f-all" data-f="all" aria-pressed="true">All</button>
+      <button type="button" id="f-podcast" data-f="podcast" aria-pressed="false">Podcasts</button>
+      <button type="button" id="f-talk" data-f="talk" aria-pressed="false">Talks</button>
+      <button type="button" id="f-video" data-f="video" aria-pressed="false">Videos</button>
+      <button type="button" id="f-writing" data-f="writing" aria-pressed="false">Writing</button>
+      <button type="button" id="f-press" data-f="press" aria-pressed="false">Press</button>
+    </div>
+    <ul class="index" id="index"></ul>
+  </div>
+</section>
+<section id="community">
+  <div class="wrap">
+    <div class="mono">04 · Community</div>
+    <h2>LebNet Houston</h2>
+    <div class="about">
+      <div>
+        <p>I am part of the founding leadership team of LebNet Houston, a new chapter of LebNet, the network for Lebanese professionals in technology.</p>
+        <p>The chapter brings together Lebanese professionals, entrepreneurs and students across technology, science and engineering in Greater Houston.</p>
+        <div class="cta"><a class="btn" href="https://community.lebnet.us/news/11577486" target="_blank" rel="noopener">Read the launch announcement</a><a class="btn" href="https://lebnet.us" target="_blank" rel="noopener">Visit LebNet</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="mono">05 · Contact</div>
+    <h2>Let's talk energy and AI.</h2>
+    <p>For speaking invitations, podcasts and industry conversations, LinkedIn is the fastest way to reach me.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://www.linkedin.com/in/hussein-shel/" target="_blank" rel="noopener">Find me on LinkedIn</a>
+    </div>
+    <div class="fine">© 2026 Hussein Shel · Houston, TX · Views are my own.</div>
+  </div>
+</footer>
+
+<script>
+// Media index: real, public links only.
+const MEDIA = [
+  { d: "2026-12", f: "talk", k: "Upcoming", y: "Dec 2026", t: "AI for Energy Executive Dinner: oil and gas industry outlook", o: "Google Cloud x Intersect · Houston · with Sheldon Kimber", u: "https://cloud.google.com/events/ai-for-energy-exec-dinner" },
+  { d: "2026-10", f: "talk", k: "Session", y: "2026", t: "Augmenting Minds, Not Replacing Them", o: "GEV · Unlocking human potential with intelligent AI systems", u: "" },
+  { d: "2026-09", f: "press", k: "News", y: "Sep 2026", t: "LebNet Launches Its Houston Community!", o: "LebNet", u: "https://community.lebnet.us/news/11577486" },
+  { d: "2026-07", f: "press", k: "News", y: "Jul 2026", t: "Google Cloud names Hussein Shel to lead oil & gas unit", o: "Data Center Dynamics", u: "https://www.datacenterdynamics.com/en/news/google-cloud-names-hussein-shell-to-lead-oil-gas-unit/" },
+  { d: "2026-06", f: "talk", k: "Plenary", y: "Jun 2026", t: "Plenary speaker, Energy Projects Conference & Expo", o: "EPC Show · Houston", u: "https://www.epcshow.com/speakers/hussein-shel-1" },
+  { d: "2026-03b", f: "talk", k: "Panel", y: "Mar 2026", t: "Advances in Exploration Technologies for Oil & Gas and Mining", o: "CERAWeek 2026 · Innovation Agora · with Baker Hughes and S&P Global", u: "https://www.ceraweek.com/en/agora/speakers/hussein-shel-1068-27831" },
+  { d: "2026-03a", f: "press", k: "Mention", y: "Mar 2026", t: "Technology and innovation headliners at CERAWeek 2026", o: "S&P Global press release", u: "https://press.spglobal.com/2026-03-22-Leaders-and-Experts-from-Amazon-Web-Services,-Google,-Microsoft,-NVIDIA,-Meta,-Dell,-Applied-Materials-and-AMD-Headline-Technology-and-Innovation-Programming-at-CERAWeek-by-S-P-Global,-March-23-27-in-Houston" },
+  { d: "2026-02", f: "podcast", k: "Podcast", y: "Feb 2026", t: "EP 79: From Chevron engineer to cloud technology leader", o: "Energy Bytes · Collide · 1 hr 8 min, audio and video", u: "https://energybytes.collide.io/episodes/ep-79-hussein-shel-from-aws" },
+  { d: "2025-10", f: "talk", k: "Panel", y: "Oct 2025", t: "AI Agent Augmented Energy: Transforming Future Potential to Near-Term Impact", o: "SPE ATCE · with Chevron, Wood Mackenzie and ExxonMobil", u: "https://www.atce.org/technical-program/ai-agent-augmented-energy-transforming-future-potential-to-near-term-impact" },
+  { d: "2025-06", f: "talk", k: "Roundtable", y: "", t: "Executive roundtable on AI for energy, co-hosted with NVIDIA", o: "AWS Energy & Utilities", u: "https://aws-executive-roundtable-energy.splashthat.com/" },
+  { d: "2025-04", f: "press", k: "Cited", y: "Apr 2025", t: "AI in the Electricity Sector: case study", o: "Brookings Institution · cites “Rethinking Energy with Generative AI”", u: "https://www.brookings.edu/wp-content/uploads/2025/04/20250401_CRM_BailyKane_AICaseStudies_Elec_FINAL.pdf" },
+  { d: "2024-12", f: "video", k: "Video", y: "Dec 2024", t: "An open collaboration for HPC acceleration (ENU305)", o: "AWS re:Invent 2024 · Energy HPC Orchestrator, built with Shell and Occidental", u: "https://classcentral.com/classroom/youtube-aws-re-invent-2024-an-open-collaboration-for-hpc-acceleration-enu305-405565" },
+  { d: "2024-11", f: "podcast", k: "Podcast", y: "Nov 2024", t: "How AWS sees the AI landscape for sustainability evolving", o: "S&P Global · ESG Insider", u: "https://www.spglobal.com/esg/podcasts/how-aws-sees-the-ai-landscape-for-sustainability-evolving" },
+  { d: "2024-03", f: "press", k: "Recap", y: "Mar 2024", t: "Distributech 2024: AI takes the stage at power and energy conference", o: "Transforma Insights · keynote write-up", u: "https://transformainsights.com/blog/distributech-2024" },
+  { d: "2024-02b", f: "podcast", k: "Podcast", y: "Feb 2024", t: "The Energy Gang at Distributech 2024 in Orlando", o: "Wood Mackenzie · The Energy Gang", u: "https://www.woodmac.com/podcasts/the-energy-gang/energy-gang-at-distributech/" },
+  { d: "2024-02a", f: "talk", k: "Keynote", y: "Feb 2024", t: "Reinventing the World with GenAI", o: "DISTRIBUTECH International 2024", u: "https://www.distributech.com/2024-distributech-international-conference-sessions/keynote-session-featuring-hussein-shel-aws" },
+  { d: "2023-12b", f: "press", k: "Mention", y: "Dec 2023", t: "Will Oil, Gas Companies Ramp Up Their Use of Generative AI in 2024?", o: "Rigzone", u: "https://www.rigzone.com/news/will_oil_gas_companies_ramp_up_their_use_of_generative_ai_in_2024-05-dec-2023-174946-article" },
+  { d: "2023-12a", f: "video", k: "Video", y: "Nov 2023", t: "Eni works with AWS to develop its collaborative geoscience platform (ENU202)", o: "AWS re:Invent 2023 · on stage with Eni", u: "https://www.linkedin.com/posts/hussein-shel-a09b301_rethinking-energy-with-generative-ai-amazon-activity-7090440351471058945-ckye" },
+  { d: "2023-11d", f: "press", k: "Feature", y: "Nov 2023", t: "Shell, AWS and CMG on the road ahead for tech-driven energy transformation", o: "Computer Modelling Group", u: "https://www.cmgl.ca/accelerate/shell-aws-and-cmg-on-the-road-ahead-for-tech-driven-energy-transformation-and-opportunities-for-the-industry/" },
+  { d: "2023-11c", f: "press", k: "Mention", y: "Nov 2023", t: "BP Says It's Expanding Use of Generative AI", o: "Rigzone", u: "https://www.rigzone.com/news/bp_says_its_expanding_use_of_generative_ai-22-nov-2023-174793-article/" },
+  { d: "2023-11b", f: "press", k: "Mention", y: "Nov 2023", t: "Shell Talks Generative AI at Web Summit", o: "Rigzone", u: "https://www.rigzone.com/news/shell_talks_generative_ai_at_web_summit-15-nov-2023-174714-article/" },
+  { d: "2023-09b", f: "press", k: "Quoted", y: "Sep 2023", t: "SC Launches Machine Learning Model for Brent Oil Price Forecasting", o: "Rigzone", u: "https://www.rigzone.com/news/sc_launches_machine_learning_model_for_brent_oil_price_forecasting-29-sep-2023-174175-article/" },
+  { d: "2023-09a", f: "press", k: "Interview", y: "Sep 2023", t: "Oil and Gas Cos Increasing Machine Learning and AI Adoption", o: "Rigzone", u: "https://www.rigzone.com/news/oil_and_gas_cos_increasing_machine_learning_and_ai_adoption-28-sep-2023-174165-article/" },
+  { d: "2023-08", f: "podcast", k: "Podcast", y: "Aug 2023", t: "Possibilities for generative AI to transform energy sector ‘nearly endless’", o: "S&P Global Energy Evolution", u: "https://www.spglobal.com/energy/en/news-research/podcasts/energy-evolution/081123-possibilities-for-generative-ai-to-transform-energy-sector-nearly-endless" },
+  { d: "2023-07b", f: "writing", k: "Blog", y: "Jul 2023", t: "Rethinking Energy with Generative AI", o: "AWS for Industries · co-author", u: "https://aws.amazon.com/blogs/industries/rethinking-energy-with-generative-ai/" },
+  { d: "2023-07a", f: "press", k: "Interview", y: "", t: "Unlocking the potential of generative AI in energy", o: "Oil Review Middle East", u: "https://oilreviewmiddleeast.com/technical-focus/unlocking-the-potential-of-generative-ai-in-energy-interview-with-amazon-web-services" },
+  { d: "2023-06b", f: "press", k: "Interview", y: "Jun 2023", t: "Generative AI Will Have Profound Impact Across Sectors", o: "Rigzone", u: "https://www.rigzone.com/news/generative_ai_will_have_profound_impact_across_sectors-12-jun-2023-173031-article/" },
+  { d: "2023-06a", f: "talk", k: "Moderator", y: "Jun 2023", t: "Global Energy Show 2023 Strategic Conference", o: "Global Energy Show · Calgary", u: "https://energynow.com/2023/05/global-energy-show-2023-strategic-conference-brings-the-globe-together-to-discuss-the-future-of-energy/" },
+  { d: "2023-03", f: "talk", k: "Session", y: "Mar 2023", t: "Accelerating Digital Technologies", o: "CERAWeek 2023 · AWS session replay", u: "https://pages.awscloud.com/GLOBAL-event-OE-energy-ceraweek-replay-2023-reg.html" },
+  { d: "2023-01", f: "talk", k: "Webinar", y: "2023", t: "AWS re:Invent recap for energy", o: "AWS Energy · webinar replay", u: "https://pages.awscloud.com/GLOBAL-event-OE-Energy-reInvent-reCap-2023-reg.html" },
+  { d: "2022-04", f: "press", k: "Mention", y: "Apr 2022", t: "Microsoft for Energy: Digitizing the energy transition and transforming the net-zero journey", o: "Microsoft Industry Blogs", u: "https://www.microsoft.com/en-us/industry/blog/energy-and-resources/2022/04/28/microsoft-for-energy-digitizing-the-energy-transition-and-transforming-the-net-zero-journey/" },
+  { d: "2020-11", f: "video", k: "Video", y: "2020", t: "Empowering exploration and production with Azure", o: "Microsoft Azure · Azure HPC series · 11 min", u: "https://techcommunity.microsoft.com/blog/azurecompute/azure-hpc-videos/1878841" },
+  { d: "2019-09", f: "press", k: "Mention", y: "Sep 2019", t: "Azure Insights: oil and gas scenarios with high-performance computing", o: "MSDynamicsWorld", u: "https://msdynamicsworld.com/story/azure-insights-oil-and-gas-azure-vmss-enabling-icmp-adfs-monitor-alerts-azure-conditional" },
+  { d: "2019-08", f: "writing", k: "Blog", y: "Aug 2019", t: "High Performance Computing: Oil and Gas in Azure", o: "Microsoft Tech Community · co-author", u: "https://techcommunity.microsoft.com/t5/azure-global/high-performance-computing-hpc-oil-and-gas-in-azure/ba-p/824926" },
+  { d: "2019-03b", f: "video", k: "Video", y: "2019", t: "Enabling sub-surface intelligence in the Cloud", o: "CERAWeek · Microsoft Azure · 20 min", u: "https://players.brightcove.net/pages/v1/index.html?accountId=4539381476001&playerId=e85EtsNcVA&videoId=6020817246001" },
+  { d: "2019-03a", f: "writing", k: "Paper", y: "2019", t: "Cloud nimble: step one for the upstream oil and gas business", o: "Wipro and Microsoft · co-author", u: "https://www.wipro.com/oil-and-gas/cloud-nimble-step-1-for-upstream-oil-and-gas-business/" },
+  { d: "2017-01", f: "writing", k: "Blog", y: "", t: "Azure Batch for oil and gas", o: "Microsoft Azure Blog", u: "https://azure.microsoft.com/fr-ca/blog/author/hushel/" }
+];
+MEDIA.sort((a, b) => a.d < b.d ? 1 : -1);
+const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const list = document.getElementById("index");
+list.innerHTML = MEDIA.map(m => {
+  const inner = `<span class="k">${m.k}</span>
+     <span class="b"><span class="t">${esc(m.t)}</span><span class="o">${esc(m.o)}</span></span>
+     <span class="y">${m.y || "↗"}</span>`;
+  return `<li data-f="${m.f}">` + (m.u
+    ? `<a class="item" href="${esc(m.u)}" target="_blank" rel="noopener">${inner}</a>`
+    : `<div class="item">${inner}</div>`) + `</li>`;
+}).join("");
+document.querySelectorAll(".filters button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".filters button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  list.querySelectorAll("li").forEach(li => li.hidden = b.dataset.f !== "all" && li.dataset.f !== b.dataset.f);
+}));
+
+// Hero: a slow seismic section (wiggle traces with filled peaks).
+(function () {
+  const c = document.getElementById("seis"), x = c.getContext("2d");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let w, h, t = 0;
+  function size() { const r = c.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2); w = r.width; h = r.height; c.width = w * d; c.height = h * d; x.setTransform(d, 0, 0, d, 0, 0); }
+  function amp(i, y) {
+    const dip = y + i * 3.2;  // dipping reflectors
+    return Math.sin(dip * 0.055 + t) * Math.exp(-Math.pow((y - h * 0.35) / (h * 0.5), 2))
+         + 0.6 * Math.sin(dip * 0.021 - t * 0.6 + i * 0.15)
+         + 0.35 * Math.sin(y * 0.13 + i * 0.9 + t * 1.3);
+  }
+  function draw() {
+    x.clearRect(0, 0, w, h);
+    const gap = 14, n = Math.ceil(w / gap) + 1;
+    for (let i = 0; i < n; i++) {
+      const bx = i * gap;
+      x.beginPath(); x.moveTo(bx, 0);
+      for (let y = 0; y <= h; y += 4) x.lineTo(bx + Math.max(0, amp(i, y)) * 6, y);
+      x.lineTo(bx, h); x.closePath();
+      x.fillStyle = "rgba(255,154,61,.34)"; x.fill();
+      x.beginPath();
+      for (let y = 0; y <= h; y += 4) { const px = bx + amp(i, y) * 6; y ? x.lineTo(px, y) : x.moveTo(px, y); }
+      x.strokeStyle = "rgba(141,153,166,.38)"; x.lineWidth = 1; x.stroke();
+    }
+  }
+  function loop() { t += 0.006; draw(); requestAnimationFrame(loop); }
+  size(); draw();
+  addEventListener("resize", () => { size(); draw(); });
+  if (!still) requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
